@@ -4,6 +4,33 @@
 #include "PacManGameState.h"
 
 
+APacManGameState::APacManGameState()
+{
+	//search our custom pacman and set as default pawn if founded
+	static ConstructorHelpers::FClassFinder<APawn>
+		PlayerPawnOb(TEXT("Blueprint'/Game/Blueprints/BP_PacManChar.BP_PacManChar'"));
+	if (PlayerPawnOb.Class != NULL)
+	{
+		DefaultPawnClass = PlayerPawnOb.Class;
+	}
+}
+
+void APacManGameState::BeginPlay ()
+{
+	Super::BeginPlay();
+	// set to be on menu state as soon as the game start
+	SetCurrentState(EGameState::EMenu);
+	// find the first player controller and set it to our pc
+
+		PlayerController = GetWorld()->GetFirstPlayerController();
+	// find the ghosts in the scene and store them to our array
+	//for (TActorIterator<AEnemy> enemyIt(GetWorld()); enemyIt; ++
+	//	enemyIt)
+	//{
+	//	AEnemy * enemy = Cast< AEnemy >(*enemyIt);
+	//	if (enemy) { Enemies.Add(enemy); }
+	//}
+}
 
 EGameState APacManGameState::GetCurrentState() const
 {

@@ -23,8 +23,12 @@ class UETUT_02_PACMAN_API APacManGameState : public AGameMode
 	GENERATED_BODY()
 
 	EGameState currentState = EGameState::EMenu;
-
+	APlayerController* PlayerController;
 public:
+	APacManGameState();
+
+	void BeginPlay() override;
+
 	EGameState GetCurrentState () const;
 
 	void SetCurrentState (EGameState value);
