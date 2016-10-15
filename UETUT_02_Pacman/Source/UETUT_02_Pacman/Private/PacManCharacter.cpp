@@ -15,8 +15,19 @@ void APacManCharacter::OnCollision(UPrimitiveComponent * HitComp, AActor * Other
 		{
 			// in any case, destroy that collectable!
 			OtherActor->Destroy();
+			CollectablesToEat--;
+			if (CollectablesToEat == 0)
+				GameMode->SetCurrentState (EGameState::EWin);
 		}
 	}
+}
+
+void APacManCharacter::Kill ()
+{
+	if (--Lives == 0)
+		GameMode->SetCurrentState (EGameState::EGameOver);
+	else
+		SetActorLocation (SpawnPoint);
 }
 
 // Sets default values
@@ -32,7 +43,16 @@ APacManCharacter::APacManCharacter()
 void APacManCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	SpawnPoint = GetActorLocation ();
+	Lives = 3;
+
+	//Count Collactables
+	for (TActorIterator<ACollectable> CollectableItr(GetWorld()); CollectableItr; ++CollectableItr)
+	{
+		CollectablesToEat--;
+	}
+
 	GameMode = Cast<APacManGameState>(UGameplayStatics::GetGameMode(this));
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &APacManCharacter::OnCollision);
 }

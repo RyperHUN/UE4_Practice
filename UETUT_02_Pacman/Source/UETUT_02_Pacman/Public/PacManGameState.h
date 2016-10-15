@@ -22,7 +22,6 @@ class UETUT_02_PACMAN_API APacManGameState : public AGameMode
 {
 	GENERATED_BODY()
 
-
 	EGameState currentState = EGameState::EMenu;
 
 public:
