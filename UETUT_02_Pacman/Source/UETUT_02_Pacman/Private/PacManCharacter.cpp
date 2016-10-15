@@ -4,13 +4,28 @@
 #include "PacManCharacter.h"
 
 
+void APacManCharacter::OnCollision(UPrimitiveComponent * HitComp, AActor * OtherActor,
+					UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, 
+					const FHitResult & SweepResult)
+{
+	if (GameMode->GetCurrentState () == EGameState::EPlaying)
+	{
+		// check if is a true collectable
+		if (OtherActor->IsA(ACollectable::StaticClass()))
+		{
+			// in any case, destroy that collectable!
+			OtherActor->Destroy();
+		}
+	}
+}
+
 // Sets default values
 APacManCharacter::APacManCharacter()
 	: CurrentVelocity (0.0f)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	SetActorEnableCollision (true); //Enables collision!!!!
 }
 
 // Called when the game starts or when spawned
@@ -19,6 +34,7 @@ void APacManCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	GameMode = Cast<APacManGameState>(UGameplayStatics::GetGameMode(this));
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &APacManCharacter::OnCollision);
 }
 
 // Called every frame

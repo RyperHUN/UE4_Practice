@@ -3,6 +3,7 @@
 #pragma once
 
 #include "PacManGameState.h"
+#include "Collectable.h"
 
 #include "GameFramework/Character.h"
 #include "PacManCharacter.generated.h"
@@ -15,6 +16,11 @@ class UETUT_02_PACMAN_API APacManCharacter : public ACharacter
 	GENERATED_BODY()
 
 	APacManGameState* GameMode;
+
+	UFUNCTION()
+	void OnCollision(class UPrimitiveComponent* HitComp, class AActor* OtherActor,
+		class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
+		bool bFromSweep, const FHitResult & SweepResult);
 public:
 	FVector CurrentVelocity;
 	// Sets default values for this character's properties
