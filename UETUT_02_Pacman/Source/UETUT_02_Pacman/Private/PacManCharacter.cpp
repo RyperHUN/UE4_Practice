@@ -18,6 +18,7 @@ void APacManCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	GameMode = Cast<APacManGameState>(UGameplayStatics::GetGameMode(this));
 }
 
 // Called every frame
@@ -40,16 +41,21 @@ void APacManCharacter::MoveYAxis (float AxisValue)
 }
 void APacManCharacter::NewGame ()
 {
-
+	if (GameMode ->GetCurrentState() == EGameState::EMenu)
+		GameMode->SetCurrentState (EGameState::EPlaying);
 }
 
 void APacManCharacter::Pause ()
 {
-
+	if (GameMode->GetCurrentState() == EGameState::EPlaying)
+		GameMode->SetCurrentState(EGameState::EPause);
+	else if (GameMode->GetCurrentState() == EGameState::EPause)
+		GameMode->SetCurrentState(EGameState::EPlaying);
 }
+
 void APacManCharacter::RestartGame ()
 {
-
+	GetWorld()->GetFirstPlayerController()->ConsoleCommand(TEXT("RestartLevel"));
 }
 
 

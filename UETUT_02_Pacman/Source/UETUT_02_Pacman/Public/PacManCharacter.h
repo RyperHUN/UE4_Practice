@@ -2,15 +2,19 @@
 
 #pragma once
 
+#include "PacManGameState.h"
+
 #include "GameFramework/Character.h"
 #include "PacManCharacter.generated.h"
+
+
 
 UCLASS()
 class UETUT_02_PACMAN_API APacManCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-	
+	APacManGameState* GameMode;
 public:
 	FVector CurrentVelocity;
 	// Sets default values for this character's properties
