@@ -25,6 +25,46 @@ void AEnemy::Kill ()
 	GetCharacterMovement ()->MaxWalkSpeed = 300.0f;
 }
 
+//Set invulnerable and set original speed 
+void AEnemy::Rearm ()
+{
+	bIsDead = false;
+	GetCharacterMovement()->MaxWalkSpeed = 150.0f;
+	if (bIsVulnerable) 
+		SetInvulnerable();
+}
+
+// when player eat a super collectable, set all the enemies vulnerable
+//for a certain period of time
+void AEnemy::SetVulnerable ()
+{
+	// set/reset timer
+	GetWorldTimerManager().SetTimer
+	(TimerVulnerable, this, &AEnemy::SetInvulnerable, 10.0f, false);
+
+	if (bIsVulnerable)
+		return;
+
+	bIsVulnerable = true;
+
+	//Change material with transparet one
+	EnemyBody->SetMaterial(0, VulnerableMaterial);
+
+	GetCharacterMovement()->MaxWalkSpeed = 50.0f;
+}
+
+void AEnemy::SetInvulnerable()
+{
+	//Reset timer
+	GetWorldTimerManager().ClearTimer(TimerVulnerable);
+
+	bIsVulnerable = false;
+
+	EnemyBody->SetMaterial(0, DefaultMaterial);
+
+	GetCharacterMovement()->MaxWalkSpeed = 150.0f;
+}
+
 // Sets default values
 AEnemy::AEnemy()
 {
@@ -55,7 +95,16 @@ void AEnemy::OnCollision(class UPrimitiveComponent* HitComp, class AActor* Other
 	class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 	bool bFromSweep, const FHitResult & SweepResult)
 {
-	
+	if (OtherActor->IsA(APacManCharacter::StaticClass ()))
+	{
+		if (bIsVulnerable) //If pacman has superpower
+			Kill(); 
+		else
+		{
+			APacManCharacter* PacMan = Cast<APacManCharacter>(OtherActor);
+			PacMan->Kill();
+		}
+	}
 }
 
 

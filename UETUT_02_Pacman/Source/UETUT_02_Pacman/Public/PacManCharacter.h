@@ -19,7 +19,7 @@ class UETUT_02_PACMAN_API APacManCharacter : public ACharacter
 	uint8 Lives;    //Total lives
 
 	FVector SpawnPoint;
-	void Kill();
+	
 
 	APacManGameState* GameMode;
 
@@ -28,6 +28,7 @@ class UETUT_02_PACMAN_API APacManCharacter : public ACharacter
 		class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 		bool bFromSweep, const FHitResult & SweepResult);
 public:
+	void Kill();
 	FVector CurrentVelocity;
 	// Sets default values for this character's properties
 	APacManCharacter();
