@@ -8,7 +8,13 @@ APacManGameState::APacManGameState()
 {
 	//search our custom pacman and set as default pawn if founded
 	static ConstructorHelpers::FClassFinder<APawn>
-		PlayerPawnOb(TEXT("Blueprint'/Game/Blueprints/BP_PacManChar.BP_PacManChar'"));
+			//PlayerPawnOb(TEXT("Class'/Script/UETUT_02_Pacman.PacManCharacter'"));
+		    //PlayerPawnOb(TEXT("Blueprint'/Game/Blueprints/MyPacManCharacter.MyPacManCharacter'"));
+		PlayerPawnOb(TEXT("Blueprint'/Game/Blueprints/BP_PacManChar.BP_PacManChar_C'"));
+
+
+
+
 	if (PlayerPawnOb.Class != NULL)
 	{
 		DefaultPawnClass = PlayerPawnOb.Class;

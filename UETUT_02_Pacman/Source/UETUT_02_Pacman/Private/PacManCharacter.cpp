@@ -34,6 +34,7 @@ void APacManCharacter::Kill ()
 APacManCharacter::APacManCharacter()
 	: CurrentVelocity (0.0f)
 {
+
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	SetActorEnableCollision (true); //Enables collision!!!!
@@ -50,7 +51,7 @@ void APacManCharacter::BeginPlay()
 	//Count Collactables
 	for (TActorIterator<ACollectable> CollectableItr(GetWorld()); CollectableItr; ++CollectableItr)
 	{
-		CollectablesToEat--;
+		CollectablesToEat++;
 	}
 
 	GameMode = Cast<APacManGameState>(UGameplayStatics::GetGameMode(this));
@@ -67,12 +68,12 @@ void APacManCharacter::Tick( float DeltaTime )
 //Input handler functions
 void APacManCharacter::MoveXAxis (float AxisValue)
 {
-	this->CurrentVelocity.X = AxisValue;
+	this->CurrentVelocity.Y = AxisValue;
 	AddMovementInput (CurrentVelocity);
 }
 void APacManCharacter::MoveYAxis (float AxisValue)
 {
-	CurrentVelocity.Y = AxisValue;
+	CurrentVelocity.X = AxisValue;
 	AddMovementInput (CurrentVelocity);
 }
 void APacManCharacter::NewGame ()
