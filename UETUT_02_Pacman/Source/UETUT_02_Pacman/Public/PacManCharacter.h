@@ -15,8 +15,6 @@ class UETUT_02_PACMAN_API APacManCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-		UStaticMeshComponent* SphereMesh;
-
 	uint8 CollectablesToEat; //Total collactbles
 	uint8 Lives;    //Total lives
 

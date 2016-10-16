@@ -12,9 +12,6 @@ APacManGameState::APacManGameState()
 		    //PlayerPawnOb(TEXT("Blueprint'/Game/Blueprints/MyPacManCharacter.MyPacManCharacter'"));
 		PlayerPawnOb(TEXT("Blueprint'/Game/Blueprints/BP_PacManChar.BP_PacManChar_C'"));
 
-
-
-
 	if (PlayerPawnOb.Class != NULL)
 	{
 		DefaultPawnClass = PlayerPawnOb.Class;

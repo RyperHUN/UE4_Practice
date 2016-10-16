@@ -68,12 +68,12 @@ void APacManCharacter::Tick( float DeltaTime )
 //Input handler functions
 void APacManCharacter::MoveXAxis (float AxisValue)
 {
-	this->CurrentVelocity.Y = AxisValue;
+	this->CurrentVelocity.X = AxisValue;
 	AddMovementInput (CurrentVelocity);
 }
 void APacManCharacter::MoveYAxis (float AxisValue)
 {
-	CurrentVelocity.X = AxisValue;
+	CurrentVelocity.Y = AxisValue;
 	AddMovementInput (CurrentVelocity);
 }
 void APacManCharacter::NewGame ()
