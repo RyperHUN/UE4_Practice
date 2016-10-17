@@ -2,43 +2,44 @@
 
 #include "UETUT_02_Pacman.h"
 #include "AIEnemy.h"
+#include "Enemy.h"
 
 void AAIEnemy::Possess(class APawn* InPawn)
 {
 	Super::Possess(InPawn);
 
-	Bot = Cast<AEnemy>(InPawn);
+	AEnemy* Bot = Cast<AEnemy>(InPawn);
 
 	HomeLocation = Bot->GetActorLocation();
-	SearchNewPoint();
+	SearchNewPoint(Bot);
 }
 
 AAIEnemy::AAIEnemy()
 {
-
 }
 
 void AAIEnemy::OnMoveCompleted(FAIRequestID RequestId,
 	EPathFollowingResult::Type Result)
 {
-	if(!Bot->bIsDead)
-		SearchNewPoint ();
+	//if(!Bot->bIsDead)
+	//	SearchNewPoint ();
 }
 
 // in order to find a new point we search if there is a navigation
 //mesh active and
 // when found, we simple call the GetRandomPointInRadius function from
 //the NavMesh
-void AAIEnemy::SearchNewPoint()
+void AAIEnemy::SearchNewPoint(AEnemy* Bot)
 {
-	UNavigationSystem* NavMesh =
-		UNavigationSystem::GetCurrent(this);
+	static UNavigationSystem* const NavMesh = UNavigationSystem::GetCurrent(GetWorld());
+	auto test = NavMesh->GetMainNavData ();
 	if (NavMesh)
 	{
 		const float SearchRadius = 10000.0f;
 		FNavLocation RandomPt;
+		auto actorLoc = Bot->GetActorLocation();
 		const bool bFound = NavMesh->GetRandomPointInNavigableRadius
-		(Bot->GetActorLocation(), SearchRadius, RandomPt);
+		(actorLoc, SearchRadius, RandomPt);
 		if (bFound)
 		{
 			MoveToLocation(RandomPt.Location);
@@ -54,8 +55,8 @@ void AAIEnemy::GoHome()
 //Almost like Respawn
 void AAIEnemy::Rearm()
 {
-	GetWorldTimerManager().ClearTimer(TimerDead);
-	Bot->Rearm();
+	//GetWorldTimerManager().ClearTimer(TimerDead);
+	//Bot->Rearm();
 }
 
 void AAIEnemy::StopMove()

@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Enemy.h"
+
 #include "AIController.h"
 #include "AIEnemy.generated.h"
 
@@ -21,13 +21,12 @@ public:
 
 	virtual void OnMoveCompleted (FAIRequestID RequestId,
 		EPathFollowingResult::Type Result) override;
-	void SearchNewPoint();
+	void SearchNewPoint(class AEnemy* Bot);
 	void GoHome ();
 	void Rearm();
 
 	void StopMove();
 private:
-	class AEnemy* Bot;
 	FVector HomeLocation;
 	FTimerHandle TimerDead; //Before returning chasing pacman
 };

@@ -10,7 +10,7 @@ void AEnemy::SetMove (bool bMoveIt)
 	AAIEnemy* AI = Cast<AAIEnemy>(AIControllerClass);
 	
 	if (bMoveIt) 
-		AI->SearchNewPoint(); 
+		AI->SearchNewPoint(this); 
 	else 
 		AI->StopMove(); 
 }
