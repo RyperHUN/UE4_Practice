@@ -22,6 +22,7 @@ class UETUT_02_PACMAN_API APacManGameState : public AGameMode
 {
 	GENERATED_BODY()
 
+	TArray<class AEnemy*> Enemies;
 	EGameState currentState = EGameState::EMenu;
 	APlayerController* PlayerController;
 public:

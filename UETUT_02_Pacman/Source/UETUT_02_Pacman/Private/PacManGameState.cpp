@@ -1,8 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+
 #include "UETUT_02_Pacman.h"
 #include "PacManGameState.h"
-
+#include "Enemy.h"
 
 APacManGameState::APacManGameState()
 {
@@ -27,12 +28,12 @@ void APacManGameState::BeginPlay ()
 
 		PlayerController = GetWorld()->GetFirstPlayerController();
 	// find the ghosts in the scene and store them to our array
-	//for (TActorIterator<AEnemy> enemyIt(GetWorld()); enemyIt; ++
-	//	enemyIt)
-	//{
-	//	AEnemy * enemy = Cast< AEnemy >(*enemyIt);
-	//	if (enemy) { Enemies.Add(enemy); }
-	//}
+	for (TActorIterator<AEnemy> enemyIt(GetWorld()); enemyIt; ++
+		enemyIt)
+	{
+		AEnemy * enemy = Cast< AEnemy >(*enemyIt);
+		if (enemy) { Enemies.Add(enemy); }
+	}
 }
 
 EGameState APacManGameState::GetCurrentState() const
@@ -43,6 +44,27 @@ EGameState APacManGameState::GetCurrentState() const
 void APacManGameState::SetCurrentState(EGameState value)
 {
 	currentState = value;
+
+	for (auto Iter(Enemies.CreateIterator()); Iter; Iter++) {
+		switch (value)
+		{
+		case EGameState::EPlaying: // if start playing, initialize the
+			(*Iter)->SetMove(true);
+			break;
+		case EGameState::EGameOver:
+			(*Iter)->Destroy();
+			break;
+			// same of gameover.
+		case EGameState::EWin:
+			(*Iter)->Destroy();
+			break;
+		case EGameState::EPause:
+			(*Iter)->SetMove(false);
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 
