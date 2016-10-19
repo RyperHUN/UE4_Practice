@@ -11,4 +11,4 @@ You must copy UETut_01_TicTacToe\Content\StarterContent to
 
 You must download these assests for UETUT_04_TDShooter
 * https://www.unrealengine.com/marketplace/animation-starter-pack
-* AK47 
+- AK47 is included
